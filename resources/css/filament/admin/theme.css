@@ -1,0 +1,11 @@
+/*
+ * Noir + Compact. `layers.css` (identical in both packages) must precede
+ * Filament's CSS so the theme layers are ordered correctly.
+ */
+@import '../../../../vendor/filament/noir-theme/resources/css/layers.css';
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+@import '../../../../vendor/filament/noir-theme/resources/css/theme.css';
+@import '../../../../vendor/filament/compact-theme/resources/css/theme.css';
+
+@source '../../../../app/Filament/**/*';
+@source '../../../../resources/views/filament/**/*';
