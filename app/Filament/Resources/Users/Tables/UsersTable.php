@@ -24,6 +24,8 @@ class UsersTable
                 TextColumn::make('email')
                     ->label('Email address')
                     ->searchable(),
+                TextColumn::make('roles.name')
+                    ->badge(),
                 SpatieTagsColumn::make('tags'),
                 TextColumn::make('email_verified_at')
                     ->dateTime()

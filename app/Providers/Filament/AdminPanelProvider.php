@@ -2,6 +2,8 @@
 
 namespace App\Providers\Filament;
 
+use App\Settings\GeneralSettings;
+use Filament\Auth\MultiFactor\App\AppAuthentication;
 use Filament\CompactTheme\CompactThemePlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -20,6 +22,7 @@ use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Throwable;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -31,6 +34,11 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->login()
+            ->profile()
+            ->multiFactorAuthentication([
+                AppAuthentication::make()->recoverable(),
+            ])
+            ->brandName(fn (): string => $this->brandName())
             ->colors(NoirThemeColor::Colors)
             ->plugins([
                 NoirThemePlugin::make(),
@@ -60,5 +68,17 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ]);
+    }
+
+    /**
+     * Resolved lazily so a fresh install (no settings table yet) still renders.
+     */
+    protected function brandName(): string
+    {
+        try {
+            return app(GeneralSettings::class)->site_name;
+        } catch (Throwable) {
+            return config('app.name');
+        }
     }
 }
