@@ -1,0 +1,122 @@
+#!/usr/bin/env bash
+#
+# Create a new Laravel + Filament app from the filament-starter template.
+#
+#   new-filament-app <name>           private GitHub repo from the template, cloned to ~/Projects/<name>
+#   new-filament-app <name> --local   local copy only (no GitHub); used to test this script
+#
+# Env: PROJECTS_DIR (default ~/Projects), STARTER_REPO (default josephdlmd/filament-starter)
+
+set -euo pipefail
+
+STARTER_REPO="${STARTER_REPO:-josephdlmd/filament-starter}"
+STARTER_DIR="$(cd "$(dirname "$(readlink -f "$0")")/.." && pwd)"
+PROJECTS_DIR="${PROJECTS_DIR:-$HOME/Projects}"
+
+step() { printf '\n\033[1;34m==>\033[0m %s\n' "$*"; }
+fail() { printf '\033[1;31merror:\033[0m %s\n' "$*" >&2; exit 1; }
+
+usage() {
+    sed -n '3,9p' "$0" | sed 's/^# \{0,1\}//'
+    exit 1
+}
+
+name="${1:-}"
+mode="github"
+[[ -z "$name" || "$name" == -* ]] && usage
+[[ "${2:-}" == "--local" ]] && mode="local"
+[[ "$name" =~ ^[a-z0-9][a-z0-9-]*$ ]] || fail "name must be lowercase letters, digits and dashes (got '$name')"
+
+target="$PROJECTS_DIR/$name"
+[[ -e "$target" ]] && fail "$target already exists"
+
+for cmd in php composer npm git; do
+    command -v "$cmd" >/dev/null || fail "$cmd is not installed"
+done
+
+composer_auth="$(composer config --global home)/auth.json"
+[[ -f "$composer_auth" ]] || fail "no Composer auth.json at $composer_auth (the Filament license is needed for Blueprint, Noir and Compact)"
+
+title="$(sed -E 's/-+/ /g; s/\b(.)/\u\1/g' <<<"$name")"
+
+if [[ "$mode" == "github" ]]; then
+    command -v gh >/dev/null || fail "gh CLI is not installed"
+    owner="$(gh api user --jq .login)"
+    repo="$owner/$name"
+
+    step "Creating private repo $repo from $STARTER_REPO"
+    gh repo create "$repo" --private --template "$STARTER_REPO" --description "$title"
+
+    step "Cloning into $target"
+    # A repo created from a template is populated asynchronously.
+    for attempt in {1..10}; do
+        if gh repo clone "$repo" "$target" -- --quiet 2>/dev/null && [[ -f "$target/composer.json" ]]; then
+            break
+        fi
+        rm -rf "$target"
+        [[ $attempt == 10 ]] && fail "repo was not ready after 30s; clone it later with: gh repo clone $repo"
+        sleep 3
+    done
+else
+    step "Copying $STARTER_DIR to $target (local mode, no GitHub)"
+    git clone --quiet --no-local "$STARTER_DIR" "$target"
+    rm -rf "$target/.git"
+    git -C "$target" init --quiet -b main
+fi
+
+cd "$target"
+
+step "Renaming to $title"
+NAME="$name" TITLE="$title" php -r '
+    $json = json_decode(file_get_contents("composer.json"), true);
+    $json["name"] = "josephdlmd/" . getenv("NAME");
+    $json["description"] = getenv("TITLE");
+    file_put_contents("composer.json", json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . "\n");
+
+    $env = file_get_contents(".env.example");
+    $env = preg_replace("/^APP_NAME=.*$/m", "APP_NAME=\"" . getenv("TITLE") . "\"", $env);
+    file_put_contents(".env.example", $env);
+'
+rm -f bin/new-filament-app
+rmdir bin 2>/dev/null || true
+printf '# %s\n\nCreated from [filament-starter](https://github.com/%s) on %s.\n\n```bash\ncomposer run dev   # http://localhost:8000/admin  (test@example.com / password)\ncomposer check     # pint, larastan, tests\n```\n' \
+    "$title" "$STARTER_REPO" "$(date +%F)" > README.md
+
+# There is no global git identity on this machine; reuse the starter's.
+for key in user.name user.email; do
+    if value="$(git -C "$STARTER_DIR" config "$key")"; then
+        git config "$key" "$value"
+    fi
+done
+
+step "Installing dependencies, migrating, seeding and building assets"
+composer run setup --no-interaction
+
+step "Refreshing Boost guidelines and skills"
+php artisan boost:update --no-discover --no-interaction
+
+if [[ "$mode" == "github" ]]; then
+    step "Setting CI secrets on $repo"
+    AUTH="$composer_auth" php -r 'echo json_decode(file_get_contents(getenv("AUTH")), true)["http-basic"]["packages.filamentphp.com"]["username"];' \
+        | gh secret set FILAMENT_USERNAME --repo "$repo"
+    AUTH="$composer_auth" php -r 'echo json_decode(file_get_contents(getenv("AUTH")), true)["http-basic"]["packages.filamentphp.com"]["password"];' \
+        | gh secret set FILAMENT_LICENSE_KEY --repo "$repo"
+fi
+
+step "Committing"
+git add -A
+git commit --quiet -m "Initialize $name from filament-starter"
+if [[ "$mode" == "github" ]]; then
+    git push --quiet
+fi
+
+step "Done: $target"
+cat <<EOF
+
+  cd $target
+  composer run dev        # then open http://localhost:8000/admin
+  login: test@example.com / password
+
+  Next: rename the brand in Settings, review App\\Enums\\Role and App\\Enums\\Permission,
+  and plan your first feature with the planning-filament skill.
+EOF

@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5'
+          extensions: sqlite3, pdo_sqlite, gd, exif, intl
+          coverage: none
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '26'
+          cache: npm
+
+      - name: Cache Composer packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/composer
+          key: composer-${{ hashFiles('composer.lock') }}
+
+      # Filament's paid packages (Blueprint, Noir, Compact) need the license.
+      # Set once per repo:  gh secret set FILAMENT_USERNAME  /  gh secret set FILAMENT_LICENSE_KEY
+      - name: Install Composer dependencies
+        env:
+          COMPOSER_AUTH: >-
+            {"http-basic":{"packages.filamentphp.com":{"username":"${{ secrets.FILAMENT_USERNAME }}","password":"${{ secrets.FILAMENT_LICENSE_KEY }}"}}}
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      # The panel theme imports CSS from vendor/, so this must run after composer install.
+      - name: Build frontend assets
+        run: |
+          npm ci
+          npm run build
+
+      - name: Prepare environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Pint
+        run: vendor/bin/pint --test
+
+      - name: Larastan
+        run: composer analyse -- --no-progress --error-format=github
+
+      - name: Tests
+        run: php artisan test

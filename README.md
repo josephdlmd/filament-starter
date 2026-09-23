@@ -1,58 +1,74 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# filament-starter
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+The starting point for every internal Laravel + Filament app.
 
-## About Laravel
+## What's inside
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+| Area | What you get |
+|---|---|
+| Framework | Laravel 13, PHP 8.5, SQLite by default, Pest 5 |
+| Admin panel | Filament 5 at `/admin`, **Noir + Compact** themes, profile page, optional app-based **2FA** with recovery codes |
+| Access control | `spatie/laravel-permission` with `Admin` / `Staff` / `Viewer` roles (`App\Enums\Role`) and permissions (`App\Enums\Permission`). Policies check **permissions**, never roles. Users without a role cannot enter the panel. |
+| Audit trail | `spatie/laravel-activitylog` on users, role changes and settings, with a read-only **Activity log** in the panel |
+| Spatie plugins | Media Library (user avatars), Tags (user tags), Settings (`GeneralSettings`, whose site name is the panel brand) |
+| AI tooling | Laravel Boost (MCP server, `AGENTS.md`, skills) and Filament Blueprint (`planning-filament`, `reviewing-filament-plans`, `filament-security-audit`) |
+| Quality | Pint, Larastan level 5, Pest architecture tests, strict Eloquent outside production, GitHub Actions CI |
+| Time | Stored in UTC, displayed in `APP_DISPLAY_TIMEZONE` (default `Asia/Manila`) |
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+The Users resource and the Settings page are working examples of each plugin. Keep, change or delete them per app.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Requirements
 
-## Learning Laravel
+- PHP 8.5, Composer, Node 26, the `gh` CLI (logged in)
+- A Filament license in your global Composer auth (`composer config --global home` → `auth.json`, host `packages.filamentphp.com`). Blueprint, Noir and Compact are paid packages.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Create a new app
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+new-filament-app my-app          # private GitHub repo from this template → ~/Projects/my-app
+new-filament-app my-app --local  # local copy only, no GitHub
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+The script (`bin/new-filament-app`, symlinked into `~/.local/bin`):
 
-## Contributing
+1. Creates the repo from this template and clones it.
+2. Renames the Composer package and `APP_NAME`.
+3. Runs `composer run setup`: install, `.env`, key, SQLite, migrate and seed, build assets.
+4. Refreshes Boost guidelines and skills.
+5. Sets the `FILAMENT_USERNAME` / `FILAMENT_LICENSE_KEY` CI secrets from your Composer auth.
+6. Commits and pushes.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### After creating an app
 
-## Code of Conduct
+- [ ] Log in as `test@example.com` / `password`, then change the site name under **System → Settings**.
+- [ ] Review `App\Enums\Role` and `App\Enums\Permission`. Add your app's permissions and re-run `php artisan db:seed --class=RolesAndPermissionsSeeder`.
+- [ ] Decide whether to keep the demo avatar and tags on Users.
+- [ ] Pick panel colors in `AdminPanelProvider` if Noir's monochrome palette is not right for the app.
+- [ ] Plan the first feature: *"Using the planning-filament skill, create a Blueprint for … and write it to `blueprints/<name>.md`."*
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Everyday commands
 
-## Security Vulnerabilities
+```bash
+composer run dev     # app, queue, logs and Vite
+composer check       # pint --test, larastan, tests (what CI runs)
+composer analyse     # larastan only
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Keeping the starter current
 
-## License
+Changes here reach **new** apps only. Existing apps are yours to update on their own.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+composer update && npm update
+php artisan boost:update
+npm run build && composer check
+```
+
+Commit, push, and the next `new-filament-app` picks it up.
+
+## CI secrets for this repo
+
+```bash
+php -r 'echo json_decode(file_get_contents(getenv("HOME")."/.config/composer/auth.json"), true)["http-basic"]["packages.filamentphp.com"]["username"];' | gh secret set FILAMENT_USERNAME
+php -r 'echo json_decode(file_get_contents(getenv("HOME")."/.config/composer/auth.json"), true)["http-basic"]["packages.filamentphp.com"]["password"];' | gh secret set FILAMENT_LICENSE_KEY
+```
