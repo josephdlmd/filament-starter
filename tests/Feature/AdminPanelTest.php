@@ -9,6 +9,7 @@ use App\Settings\GeneralSettings;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
+use Spatie\Permission\Models\Role as RoleModel;
 
 beforeEach(function () {
     actingAsRole(Role::Admin);
@@ -35,7 +36,7 @@ it('lists users', function () {
 it('saves an avatar, tags and roles on a user', function () {
     Storage::fake('public');
     $user = User::factory()->create();
-    $staffRoleId = Spatie\Permission\Models\Role::findByName(Role::Staff->value)->getKey();
+    $staffRoleId = RoleModel::findByName(Role::Staff->value)->getKey();
 
     Livewire::test(EditUser::class, ['record' => $user->getRouteKey()])
         ->fillForm([
