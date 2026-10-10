@@ -11,7 +11,7 @@ The starting point for every internal Laravel + Filament app.
 | Access control | `spatie/laravel-permission` with `Admin` / `Staff` / `Viewer` roles (`App\Enums\Role`) and permissions (`App\Enums\Permission`). Policies check **permissions**, never roles. Users without a role cannot enter the panel. |
 | Audit trail | `spatie/laravel-activitylog` on users, role changes and settings, with a read-only **Activity log** in the panel |
 | Spatie plugins | Media Library (user avatars), Tags (user tags), Settings (`GeneralSettings`, whose site name is the panel brand) |
-| AI tooling | Laravel Boost (MCP server, `AGENTS.md`, skills), Filament Blueprint (`planning-filament`, `reviewing-filament-plans`, `filament-security-audit`) and [Filament Storybook](https://github.com/josephdlmd/filament-storybook): approved UI patterns as stories in `app/Stories`, shown at `/admin/storybook` (not in production), served to agents as `storybook-list` / `storybook-show` |
+| AI tooling | Laravel Boost (MCP server, `AGENTS.md`, skills), Filament Blueprint (`planning-filament`, `reviewing-filament-plans`, `filament-security-audit`) and [Filament Storybook](https://github.com/josephdlmd/filament-storybook): approved UI patterns as stories in `app/Stories`, at `/admin/storybook` (not in the menu, blocked in production), served to agents as `storybook-list` / `storybook-show` |
 | Quality | Pint, Larastan level 5, Pest architecture tests, strict Eloquent outside production, GitHub Actions CI |
 | Time | Stored in UTC, displayed in `APP_DISPLAY_TIMEZONE` (default `Asia/Manila`) |
 
