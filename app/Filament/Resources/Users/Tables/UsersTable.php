@@ -55,7 +55,8 @@ class UsersTable
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()
+                        ->modalDescription('They can no longer sign in, and their avatars are deleted. Their activity log entries stay. This cannot be undone.'),
                 ]),
             ]);
     }

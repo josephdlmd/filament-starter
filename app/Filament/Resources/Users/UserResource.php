@@ -13,11 +13,16 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Josephdlmd\FilamentStorybook\Concerns\HasSentenceCaseLabels;
 use UnitEnum;
 
 class UserResource extends Resource
 {
+    use HasSentenceCaseLabels;
+
     protected static ?string $model = User::class;
+
+    protected static ?string $recordTitleAttribute = 'name';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUsers;
 

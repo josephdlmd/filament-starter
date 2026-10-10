@@ -31,6 +31,9 @@ class ActivityResource extends Resource
 
     protected static ?string $pluralModelLabel = 'activity log';
 
+    // Filament title-cases the plural model label for these; activities have no name for HasSentenceCaseLabels to use.
+    protected static ?string $breadcrumb = 'Activity log';
+
     protected static ?int $navigationSort = 90;
 
     public static function infolist(Schema $schema): Schema

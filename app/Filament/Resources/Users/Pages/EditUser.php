@@ -22,7 +22,8 @@ class EditUser extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            DeleteAction::make(),
+            DeleteAction::make()
+                ->modalDescription('They can no longer sign in, and their avatar is deleted. Their activity log entries stay. This cannot be undone.'),
         ];
     }
 

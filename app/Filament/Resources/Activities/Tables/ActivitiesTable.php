@@ -25,8 +25,10 @@ class ActivitiesTable
                 TextColumn::make('causer.name')
                     ->label('Who')
                     ->placeholder('System'),
+                // Not a link: an activity logged without an event would leave an empty link that screen readers announce as just "link".
                 TextColumn::make('event')
-                    ->badge(),
+                    ->badge()
+                    ->disabledClick(),
                 TextColumn::make('subject_type')
                     ->label('Subject')
                     ->formatStateUsing(fn (?string $state, Activity $record): string => self::describeSubject($state, $record))
