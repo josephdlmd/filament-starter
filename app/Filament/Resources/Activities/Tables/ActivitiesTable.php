@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Activities\Tables;
 
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -42,7 +43,8 @@ class ActivitiesTable
                     ->options(fn (): array => Activity::query()->distinct()->whereNotNull('subject_type')->pluck('subject_type', 'subject_type')
                         ->map(fn (string $type): string => class_basename($type))
                         ->all()),
-            ])
+            ], layout: FiltersLayout::AboveContentCollapsible)
+            ->emptyStateDescription('Changes to users, roles and settings appear here.')
             ->recordActions([
                 ViewAction::make(),
             ]);
