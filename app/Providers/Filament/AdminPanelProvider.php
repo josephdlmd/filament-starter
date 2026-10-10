@@ -22,6 +22,7 @@ use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Josephdlmd\FilamentStorybook\StorybookPlugin;
 use Throwable;
 
 class AdminPanelProvider extends PanelProvider
@@ -43,6 +44,7 @@ class AdminPanelProvider extends PanelProvider
             ->plugins([
                 NoirThemePlugin::make(),
                 CompactThemePlugin::make(),
+                StorybookPlugin::make(),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "85dbacc0ac04abae3b4b555ac05b0f82",
+    "content-hash": "9ec76a8884f821df89ab97f4ca730694",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -2327,6 +2327,66 @@
                 }
             ],
             "time": "2026-08-24T17:13:02+00:00"
+        },
+        {
+            "name": "josephdlmd/filament-storybook",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/josephdlmd/filament-storybook.git",
+                "reference": "0ea09f7533ea9f202822522b67fc00a342d1db88"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/josephdlmd/filament-storybook/zipball/0ea09f7533ea9f202822522b67fc00a342d1db88",
+                "reference": "0ea09f7533ea9f202822522b67fc00a342d1db88",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^5.0",
+                "php": "^8.3"
+            },
+            "require-dev": {
+                "laravel/mcp": "^1.0",
+                "orchestra/testbench": "^11.0",
+                "pestphp/pest": "^5.0",
+                "pestphp/pest-plugin-laravel": "^5.0"
+            },
+            "suggest": {
+                "laravel/boost": "Exposes the stories to AI agents as the storybook-list and storybook-show MCP tools."
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Josephdlmd\\FilamentStorybook\\FilamentStorybookServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Josephdlmd\\FilamentStorybook\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Josephdlmd\\FilamentStorybook\\Tests\\": "tests/"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "pest"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Storybook for native Filament components: house patterns as PHP stories, a live catalogue page, and Boost MCP tools so AI agents reuse them instead of guessing.",
+            "support": {
+                "source": "https://github.com/josephdlmd/filament-storybook/tree/v0.1.0",
+                "issues": "https://github.com/josephdlmd/filament-storybook/issues"
+            },
+            "time": "2026-10-10T11:08:15+00:00"
         },
         {
             "name": "kirschbaum-development/eloquent-power-joins",
