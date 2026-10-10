@@ -17,6 +17,7 @@
         "filament/spatie-laravel-media-library-plugin": "^5.0",
         "filament/spatie-laravel-settings-plugin": "^5.0",
         "filament/spatie-laravel-tags-plugin": "^5.0",
+        "josephdlmd/filament-storybook": "^0.1",
         "laravel/framework": "^13.17",
         "laravel/tinker": "^3.0",
         "spatie/laravel-activitylog": "^5.0",
@@ -112,6 +113,11 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "repositories": [
+        {
+            "name": "filament-storybook",
+            "type": "vcs",
+            "url": "https://github.com/josephdlmd/filament-storybook"
+        },
         {
             "name": "filament",
             "type": "composer",

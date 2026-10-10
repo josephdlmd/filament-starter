@@ -8,7 +8,8 @@
     "nightwatch": false,
     "packages": [
         "filament/filament",
-        "filament/blueprint"
+        "filament/blueprint",
+        "josephdlmd/filament-storybook"
     ],
     "sail": false,
     "skills": [
