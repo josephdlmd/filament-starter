@@ -18,7 +18,9 @@ class UserForm
                 SpatieMediaLibraryFileUpload::make('avatar')
                     ->collection('avatars')
                     ->avatar()
-                    ->image(),
+                    ->acceptedFileTypes(['image/jpeg', 'image/png'])
+                    ->maxSize(2048)
+                    ->helperText('JPG or PNG, up to 2 MB'),
                 TextInput::make('name')
                     ->required(),
                 TextInput::make('email')

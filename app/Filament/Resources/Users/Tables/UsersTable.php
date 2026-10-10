@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Users\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
@@ -41,6 +42,10 @@ class UsersTable
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+            ])
+            ->emptyStateDescription('People you add can sign in to the panel.')
+            ->emptyStateActions([
+                CreateAction::make(),
             ])
             ->filters([
                 //
