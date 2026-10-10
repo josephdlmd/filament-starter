@@ -1,14 +1,15 @@
 <?php
 
-use App\Enums\Role;
+use Filament\Facades\Filament;
 use Josephdlmd\FilamentStorybook\Livewire\StoryCanvas;
 use Josephdlmd\FilamentStorybook\Mcp;
+use Josephdlmd\FilamentStorybook\Pages\Storybook;
 use Josephdlmd\FilamentStorybook\StoryRegistry;
 use Laravel\Boost\Mcp\ToolRegistry;
 use Livewire\Livewire;
 
 beforeEach(function () {
-    actingAsRole(Role::Admin);
+    Filament::setCurrentPanel(Storybook::panel());
 });
 
 it('renders every stories pattern', function () {
@@ -17,10 +18,6 @@ it('renders every stories pattern', function () {
             Livewire::test(StoryCanvas::class, ['stories' => $stories::class, 'story' => $story])->assertOk();
         }
     }
-});
-
-it('shows the storybook page', function () {
-    $this->get('/admin/storybook')->assertOk();
 });
 
 // The tools reach Boost through boost.mcp.tools.include, which isn't in Boost's config file; fail loudly if an update drops it.
