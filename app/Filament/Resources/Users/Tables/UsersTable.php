@@ -16,9 +16,11 @@ class UsersTable
     {
         return $table
             ->columns([
+                // Not a link: a user without an avatar would leave an empty link that screen readers announce as just "link".
                 SpatieMediaLibraryImageColumn::make('avatar')
                     ->collection('avatars')
-                    ->circular(),
+                    ->circular()
+                    ->disabledClick(),
                 TextColumn::make('name')
                     ->searchable(),
                 TextColumn::make('email')
@@ -26,7 +28,8 @@ class UsersTable
                     ->searchable(),
                 TextColumn::make('roles.name')
                     ->badge(),
-                SpatieTagsColumn::make('tags'),
+                SpatieTagsColumn::make('tags')
+                    ->disabledClick(),
                 TextColumn::make('email_verified_at')
                     ->dateTime()
                     ->sortable(),
@@ -39,6 +42,7 @@ class UsersTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultPaginationPageOption(25)
             ->filters([
                 //
             ])
