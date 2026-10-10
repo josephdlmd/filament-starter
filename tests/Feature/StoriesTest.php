@@ -2,7 +2,9 @@
 
 use App\Enums\Role;
 use Josephdlmd\FilamentStorybook\Livewire\StoryCanvas;
+use Josephdlmd\FilamentStorybook\Mcp;
 use Josephdlmd\FilamentStorybook\StoryRegistry;
+use Laravel\Boost\Mcp\ToolRegistry;
 use Livewire\Livewire;
 
 beforeEach(function () {
@@ -19,4 +21,15 @@ it('renders every stories pattern', function () {
 
 it('shows the storybook page', function () {
     $this->get('/admin/storybook')->assertOk();
+});
+
+// The tools reach Boost through boost.mcp.tools.include, which isn't in Boost's config file; fail loudly if an update drops it.
+it('gives agents the storybook tools through Boost', function () {
+    expect(ToolRegistry::getAvailableTools())->toContain(
+        Mcp\ListStories::class,
+        Mcp\ShowStories::class,
+        Mcp\ShowInstructions::class,
+        Mcp\TestStories::class,
+        Mcp\AuditPages::class,
+    );
 });
