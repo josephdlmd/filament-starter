@@ -41,6 +41,8 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->brandName(fn (): string => $this->brandName())
             ->colors(NoirThemeColor::Colors)
+            // Imports, exports and other background work report back here (Filament Storybook: tables-import-and-export).
+            ->databaseNotifications()
             ->plugins([
                 NoirThemePlugin::make(),
                 CompactThemePlugin::make(),
