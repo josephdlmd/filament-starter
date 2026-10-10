@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8468a193361a7dc622058b10adcd4bbe",
+    "content-hash": "d6da4aa38e83615e5d3287d3b28f975c",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -2330,16 +2330,16 @@
         },
         {
             "name": "josephdlmd/filament-storybook",
-            "version": "v0.21.0",
+            "version": "v0.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/josephdlmd/filament-storybook.git",
-                "reference": "992e435fd17d64826c21722c1c0ff0f6e838d146"
+                "reference": "e1af60d83db0a154ce0394b485a5198c0efbd2bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/josephdlmd/filament-storybook/zipball/992e435fd17d64826c21722c1c0ff0f6e838d146",
-                "reference": "992e435fd17d64826c21722c1c0ff0f6e838d146",
+                "url": "https://api.github.com/repos/josephdlmd/filament-storybook/zipball/e1af60d83db0a154ce0394b485a5198c0efbd2bb",
+                "reference": "e1af60d83db0a154ce0394b485a5198c0efbd2bb",
                 "shasum": ""
             },
             "require": {
@@ -2388,10 +2388,10 @@
             ],
             "description": "Storybook for native Filament components: house patterns as PHP stories, a live catalogue page, and Boost MCP tools so AI agents reuse them instead of guessing.",
             "support": {
-                "source": "https://github.com/josephdlmd/filament-storybook/tree/v0.21.0",
+                "source": "https://github.com/josephdlmd/filament-storybook/tree/v0.22.0",
                 "issues": "https://github.com/josephdlmd/filament-storybook/issues"
             },
-            "time": "2026-10-10T17:51:14+00:00"
+            "time": "2026-10-10T17:54:42+00:00"
         },
         {
             "name": "kirschbaum-development/eloquent-power-joins",
