@@ -2330,21 +2330,24 @@
         },
         {
             "name": "josephdlmd/filament-storybook",
-            "version": "v0.9.0",
+            "version": "v0.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/josephdlmd/filament-storybook.git",
-                "reference": "86caa6355c818060d687dc61b758696d8127e870"
+                "reference": "64a5ec56e2b878be8af85898ad6d180610412d56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/josephdlmd/filament-storybook/zipball/86caa6355c818060d687dc61b758696d8127e870",
-                "reference": "86caa6355c818060d687dc61b758696d8127e870",
+                "url": "https://api.github.com/repos/josephdlmd/filament-storybook/zipball/64a5ec56e2b878be8af85898ad6d180610412d56",
+                "reference": "64a5ec56e2b878be8af85898ad6d180610412d56",
                 "shasum": ""
             },
             "require": {
                 "filament/filament": "^5.0",
                 "php": "^8.3"
+            },
+            "conflict": {
+                "laravel/mcp": ">=2.0"
             },
             "require-dev": {
                 "laravel/mcp": "^1.0",
@@ -2353,7 +2356,7 @@
                 "pestphp/pest-plugin-laravel": "^5.0"
             },
             "suggest": {
-                "laravel/boost": "Exposes the stories to AI agents as the storybook-list and storybook-show MCP tools."
+                "laravel/boost": "Gives AI agents the patterns, rules and checks as the storybook-list, storybook-show, storybook-instructions, storybook-test and storybook-audit MCP tools."
             },
             "type": "library",
             "extra": {
@@ -2383,10 +2386,10 @@
             ],
             "description": "Storybook for native Filament components: house patterns as PHP stories, a live catalogue page, and Boost MCP tools so AI agents reuse them instead of guessing.",
             "support": {
-                "source": "https://github.com/josephdlmd/filament-storybook/tree/v0.9.0",
+                "source": "https://github.com/josephdlmd/filament-storybook/tree/v0.9.1",
                 "issues": "https://github.com/josephdlmd/filament-storybook/issues"
             },
-            "time": "2026-10-10T13:32:36+00:00"
+            "time": "2026-10-10T13:51:00+00:00"
         },
         {
             "name": "kirschbaum-development/eloquent-power-joins",
