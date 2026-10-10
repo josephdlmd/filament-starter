@@ -16,6 +16,7 @@ class ActivitiesTable
         return $table
             ->modifyQueryUsing(fn (Builder $query): Builder => $query->with(['causer', 'subject']))
             ->defaultSort('created_at', 'desc')
+            ->defaultPaginationPageOption(25)
             ->columns([
                 TextColumn::make('created_at')
                     ->label('When')
