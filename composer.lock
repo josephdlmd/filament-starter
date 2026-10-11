@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cbc9a030c7d95238dd6a9c11a75db30d",
+    "content-hash": "ab3ffdffcda1cd1745876faf5b74a72e",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -2330,16 +2330,16 @@
         },
         {
             "name": "josephdlmd/filament-storybook",
-            "version": "v0.48.0",
+            "version": "v0.49.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:josephdlmd/filament-storybook.git",
-                "reference": "0af687a1f639f3d2671889e061f5a125f8318e3c"
+                "reference": "524faa34e2b3d6851060ff8096ca4a0ab476cb8b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/josephdlmd/filament-storybook/zipball/0af687a1f639f3d2671889e061f5a125f8318e3c",
-                "reference": "0af687a1f639f3d2671889e061f5a125f8318e3c",
+                "url": "https://api.github.com/repos/josephdlmd/filament-storybook/zipball/524faa34e2b3d6851060ff8096ca4a0ab476cb8b",
+                "reference": "524faa34e2b3d6851060ff8096ca4a0ab476cb8b",
                 "shasum": ""
             },
             "require": {
@@ -2389,7 +2389,7 @@
                 "MIT"
             ],
             "description": "Storybook for native Filament components: house patterns as PHP stories, a live catalogue page, and Boost MCP tools so AI agents reuse them instead of guessing.",
-            "time": "2026-10-11T11:59:17+00:00"
+            "time": "2026-10-11T12:22:47+00:00"
         },
         {
             "name": "kirschbaum-development/eloquent-power-joins",
