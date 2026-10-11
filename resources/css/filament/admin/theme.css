@@ -9,3 +9,13 @@
 
 @source '../../../../app/Filament/**/*';
 @source '../../../../resources/views/filament/**/*';
+
+/*
+ * Focus: one 2px line in mid-grey, without Noir's 4px halo, as Carbon's focus is a single 2px line (owner, 2026-10-11).
+ * Zinc-500 is the lightest theme grey that keeps WCAG 1.4.11's 3:1 against the light and the dark backgrounds.
+ */
+.fi-body,
+.dark .fi-body {
+    --noir-theme-focus: var(--gray-500);
+    --noir-theme-focus-halo: transparent;
+}
