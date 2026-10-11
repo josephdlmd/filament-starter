@@ -11,11 +11,32 @@
 @source '../../../../resources/views/filament/**/*';
 
 /*
- * Focus: one 2px line in mid-grey, without Noir's 4px halo, as Carbon's focus is a single 2px line (owner, 2026-10-11).
- * Zinc-500 is the lightest theme grey that keeps WCAG 1.4.11's 3:1 against the light and the dark backgrounds.
+ * No glows (owner, 2026-10-11). Noir's halos, blurs and washes are removed; borders, rings and the shadows of floating
+ * layers (menus, modals) stay.
  */
+
+/* Focus: one 2px line in mid-grey, as Carbon's focus is a single 2px line. Zinc-500 is the lightest theme grey that keeps
+   WCAG 1.4.11's 3:1 against the light and the dark backgrounds. The login page loses its glow too. */
 .fi-body,
 .dark .fi-body {
     --noir-theme-focus: var(--gray-500);
     --noir-theme-focus-halo: transparent;
+    --noir-theme-auth-glow: transparent;
+    --noir-theme-primary-ring: transparent;
+}
+
+/* Dark mode: fields and buttons without the 12px white glow; Noir's other control shadows stay. */
+.dark .fi-body {
+    --noir-theme-shadow-control:
+        0 0 0 1px rgb(0 0 0 / 55%), inset 0 -1px 0.4px rgb(0 0 0 / 22%), inset var(--noir-theme-seam-lip);
+    --noir-theme-shadow-control-primary:
+        0 0 0 2px rgb(0 0 0 / 50%), inset 0 -1px 0.4px rgb(0 0 0 / 20%), inset 0 1px 0.4px rgb(255 255 255 / 60%);
+}
+
+/* Dark mode: badges and modal and empty-state icons without their coloured glow; their rings stay. */
+.fi-badge,
+.fi-modal-icon-bg,
+.fi-empty-state-icon-bg,
+.fi-ta-empty-state-icon-bg {
+    --tw-shadow: 0 0 #0000;
 }
