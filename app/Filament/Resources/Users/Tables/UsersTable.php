@@ -17,13 +17,15 @@ class UsersTable
     {
         return $table
             ->columns([
+                // The readable identifier comes first (Filament Storybook: tables-list-table).
+                TextColumn::make('name')
+                    ->searchable(),
                 // Not a link: a user without an avatar would leave an empty link that screen readers announce as just "link".
                 SpatieMediaLibraryImageColumn::make('avatar')
                     ->collection('avatars')
                     ->circular()
-                    ->disabledClick(),
-                TextColumn::make('name')
-                    ->searchable(),
+                    ->disabledClick()
+                    ->toggleable(),
                 TextColumn::make('email')
                     ->label('Email address')
                     ->searchable(),
@@ -32,14 +34,14 @@ class UsersTable
                 SpatieTagsColumn::make('tags')
                     ->disabledClick(),
                 TextColumn::make('email_verified_at')
-                    ->dateTime()
+                    ->dateTime('M j, Y g:i A T')
                     ->sortable(),
                 TextColumn::make('created_at')
-                    ->dateTime()
+                    ->dateTime('M j, Y g:i A T')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->dateTime('M j, Y g:i A T')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

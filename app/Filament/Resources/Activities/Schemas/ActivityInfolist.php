@@ -19,7 +19,7 @@ class ActivityInfolist
                     ->schema([
                         TextEntry::make('created_at')
                             ->label('When')
-                            ->dateTime(),
+                            ->dateTime('M j, Y g:i A T'),
                         TextEntry::make('causer.name')
                             ->label('Who')
                             ->placeholder('System'),
