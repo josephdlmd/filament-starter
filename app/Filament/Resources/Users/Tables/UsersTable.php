@@ -45,7 +45,8 @@ class UsersTable
             ])
             ->emptyStateDescription('People you add can sign in to the panel.')
             ->emptyStateActions([
-                CreateAction::make(),
+                // The page header already has the primary New button (Filament Storybook: tables-list-table).
+                CreateAction::make()->outlined(),
             ])
             ->filters([
                 //
