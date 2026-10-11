@@ -20,7 +20,7 @@ class ActivitiesTable
             ->columns([
                 TextColumn::make('created_at')
                     ->label('When')
-                    ->dateTime()
+                    ->dateTime('M j, Y g:i A T')
                     ->sortable(),
                 TextColumn::make('causer.name')
                     ->label('Who')

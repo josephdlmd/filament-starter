@@ -23,25 +23,31 @@ class UserForm
                     ->maxSize(2048)
                     ->helperText('JPG or PNG, up to 2 MB'),
                 TextInput::make('name')
-                    ->required(),
+                    ->required()
+                    ->maxWidth('md'),
                 TextInput::make('email')
                     ->label('Email address')
                     ->email()
-                    ->required(),
+                    ->required()
+                    ->maxWidth('md'),
                 TextInput::make('password')
                     // Optional fields say so (Filament Storybook: forms-record-form); a new user needs one, an existing user keeps theirs.
                     ->label(fn (string $operation): string => $operation === 'create' ? 'Password' : 'Password (optional)')
                     ->password()
                     ->required(fn (string $operation): bool => $operation === 'create')
-                    ->dehydrated(fn (?string $state): bool => filled($state)),
+                    ->dehydrated(fn (?string $state): bool => filled($state))
+                    ->maxWidth('md'),
                 Select::make('roles')
                     ->label('Roles (optional)')
                     ->relationship('roles', 'name')
                     ->multiple()
                     ->preload()
-                    ->disabled(fn (): bool => ! auth()->user()?->can(Permission::ManageUsers->value)),
+                    ->disabled(fn (): bool => ! auth()->user()?->can(Permission::ManageUsers->value))
+                    ->maxWidth('md'),
                 SpatieTagsInput::make('tags')
-                    ->label('Tags (optional)'),
+                    ->label('Tags (optional)')
+                    // Each input is about as wide as its answer (Filament Storybook: forms-record-form).
+                    ->maxWidth('md'),
             ]);
     }
 }

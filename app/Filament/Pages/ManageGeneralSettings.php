@@ -19,6 +19,8 @@ class ManageGeneralSettings extends SettingsPage
 
     protected static ?string $navigationLabel = 'Settings';
 
+    protected static ?string $title = 'General settings';
+
     protected static string $settings = GeneralSettings::class;
 
     /**
@@ -36,7 +38,7 @@ class ManageGeneralSettings extends SettingsPage
         return $schema
             ->components([
                 TextInput::make('site_name')
-                    ->helperText('Shown as the panel brand name.')
+                    ->helperText('Shown as the panel\'s brand name')
                     ->required()
                     ->maxLength(255),
             ]);
