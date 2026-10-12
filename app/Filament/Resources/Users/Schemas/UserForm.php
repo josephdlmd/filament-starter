@@ -30,13 +30,6 @@ class UserForm
                     ->email()
                     ->required()
                     ->maxWidth('md'),
-                TextInput::make('password')
-                    // Optional fields say so (Filament Storybook: forms-record-form); a new user needs one, an existing user keeps theirs.
-                    ->label(fn (string $operation): string => $operation === 'create' ? 'Password' : 'Password (optional)')
-                    ->password()
-                    ->required(fn (string $operation): bool => $operation === 'create')
-                    ->dehydrated(fn (?string $state): bool => filled($state))
-                    ->maxWidth('md'),
                 Select::make('roles')
                     ->label('Roles (optional)')
                     ->relationship('roles', 'name')

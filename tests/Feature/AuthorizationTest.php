@@ -3,8 +3,8 @@
 use App\Enums\Role;
 use App\Filament\Pages\ManageGeneralSettings;
 use App\Filament\Resources\Activities\ActivityResource;
-use App\Filament\Resources\Users\Pages\CreateUser;
 use App\Filament\Resources\Users\Pages\EditUser;
+use App\Filament\Resources\Users\Pages\ListUsers;
 use App\Filament\Resources\Users\UserResource;
 use App\Models\User;
 
@@ -24,17 +24,17 @@ it('lets admins reach users, settings and the activity log', function () {
     actingAsRole(Role::Admin);
 
     $this->get(UserResource::getUrl('index'))->assertOk();
-    $this->get(UserResource::getUrl('create'))->assertOk();
+    Livewire\Livewire::test(ListUsers::class)->assertActionVisible('invite');
     $this->get(ManageGeneralSettings::getUrl())->assertOk();
     $this->get(ActivityResource::getUrl('index'))->assertOk();
 });
 
-it('lets staff list users but not create or edit them', function () {
+it('lets staff list users but not invite or edit them', function () {
     actingAsRole(Role::Staff);
     $other = User::factory()->create();
 
     $this->get(UserResource::getUrl('index'))->assertOk();
-    $this->get(CreateUser::getUrl())->assertForbidden();
+    Livewire\Livewire::test(ListUsers::class)->assertActionHidden('invite');
     $this->get(EditUser::getUrl(['record' => $other]))->assertForbidden();
 });
 
