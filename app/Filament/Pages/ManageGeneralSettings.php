@@ -41,6 +41,14 @@ class ManageGeneralSettings extends SettingsPage
                     ->helperText('Shown as the panel\'s brand name')
                     ->required()
                     ->maxLength(255),
+                TextInput::make('company_email')
+                    ->label('Billing email address')
+                    ->helperText('Documents are emailed from this address, and replies come back to it')
+                    ->email()
+                    ->maxLength(254)
+                    ->extraInputAttributes(['spellcheck' => 'false'])
+                    ->maxWidth('md')
+                    ->required(),
             ]);
     }
 

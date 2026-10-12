@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Auth\AcceptInvitation;
 use App\Settings\GeneralSettings;
 use Filament\Auth\MultiFactor\App\AppAuthentication;
 use Filament\CompactTheme\CompactThemePlugin;
@@ -21,6 +22,7 @@ use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Route;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Josephdlmd\FilamentStorybook\StorybookPlugin;
 use Throwable;
@@ -36,6 +38,8 @@ class AdminPanelProvider extends PanelProvider
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->login()
             ->profile()
+            // Where an invited user sets their own password, from the link in their invitation (Filament Storybook: actions-invite-a-user).
+            ->routes(fn () => Route::get('invitation/{user}', AcceptInvitation::class)->name('invitation'))
             ->multiFactorAuthentication([
                 AppAuthentication::make()->recoverable(),
             ])

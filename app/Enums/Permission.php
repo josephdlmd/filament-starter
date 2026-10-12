@@ -8,4 +8,6 @@ enum Permission: string
     case ManageUsers = 'manage users';
     case ManageSettings = 'manage settings';
     case ViewActivityLog = 'view activity log';
+    // Report pages check it in canAccess() (Filament Storybook: reports-sales).
+    case ViewReports = 'view reports';
 }
