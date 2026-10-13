@@ -4,6 +4,7 @@ use App\Enums\Role;
 use App\Filament\Resources\Users\Pages\ListUsers;
 use App\Models\User;
 use App\Notifications\UserInvitation;
+use Filament\Actions\Testing\TestAction;
 use Illuminate\Support\Facades\Notification;
 use Livewire\Livewire;
 
@@ -13,7 +14,7 @@ it('invites a user by email, with no password until they set their own', functio
 
     Livewire::test(ListUsers::class)
         ->callAction('invite', data: ['name' => 'Ben Cruz', 'email' => 'ben@example.com', 'roles' => [Role::Staff->value]])
-        ->assertHasNoActionErrors()
+        ->assertHasNoFormErrors()
         ->assertNotified('Invitation sent to ben@example.com');
 
     $user = User::where('email', 'ben@example.com')->sole();
@@ -31,7 +32,7 @@ it('lets the invited user open their link, and stops it once withdrawn', functio
     $this->get($link)->assertOk()->assertSee('Set your password')->assertSee('At least 15 characters');
 
     actingAsRole(Role::Admin);
-    Livewire::test(ListUsers::class)->callTableAction('withdraw', $user);
+    Livewire::test(ListUsers::class)->callAction(TestAction::make('withdraw')->table($user));
     auth()->logout();
 
     expect(User::find($user->id))->toBeNull();

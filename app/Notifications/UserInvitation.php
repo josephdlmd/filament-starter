@@ -4,6 +4,8 @@ namespace App\Notifications;
 
 use App\Filament\Auth\AcceptInvitation;
 use Filament\Facades\Filament;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\URL;
@@ -11,9 +13,14 @@ use Illuminate\Support\Facades\URL;
 /**
  * The invitation email: a signed link to `AcceptInvitation` that works for its `DAYS` days and stops working when a
  * newer one is sent. Send it after setting the user's `invited_at` to now (Filament Storybook: actions-invite-a-user).
+ *
+ * Queued, so a slow or failing mail server doesn't hold up or break the action after the user is saved; the job reloads
+ * the user, so its link is for the newest `invited_at`.
  */
-class UserInvitation extends Notification
+class UserInvitation extends Notification implements ShouldQueue
 {
+    use Queueable;
+
     /** @return list<string> */
     public function via(object $notifiable): array
     {
