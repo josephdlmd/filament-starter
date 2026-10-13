@@ -3,11 +3,14 @@
 namespace App\Filament\Resources\Users\Schemas;
 
 use App\Enums\Permission;
-use Filament\Forms\Components\Select;
+use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\SpatieTagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 class UserForm
 {
@@ -30,13 +33,12 @@ class UserForm
                     ->email()
                     ->required()
                     ->maxWidth('md'),
-                Select::make('roles')
+                // Several from five or fewer: a checkbox list (Filament Storybook: forms-choice).
+                CheckboxList::make('roles')
                     ->label('Roles (optional)')
-                    ->relationship('roles', 'name')
-                    ->multiple()
-                    ->preload()
-                    ->disabled(fn (): bool => ! auth()->user()?->can(Permission::ManageUsers->value))
-                    ->maxWidth('md'),
+                    ->relationship('roles', 'name', fn (Builder $query): Builder => $query->orderBy('name'))
+                    ->getOptionLabelFromRecordUsing(fn (Role $role): string => Str::headline($role->name))
+                    ->disabled(fn (): bool => ! auth()->user()?->can(Permission::ManageUsers->value)),
                 SpatieTagsInput::make('tags')
                     ->label('Tags (optional)')
                     // Each input is about as wide as its answer (Filament Storybook: forms-record-form).

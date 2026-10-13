@@ -6,9 +6,10 @@ use App\Filament\Resources\Users\UserResource;
 use App\Models\User;
 use App\Notifications\UserInvitation;
 use Filament\Actions\Action;
-use Filament\Forms\Components\Select;
+use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Pages\ListRecords;
+use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 
 class ListUsers extends ListRecords
@@ -46,11 +47,10 @@ class ListUsers extends ListRecords
                     ->unique(User::class)
                     ->required()
                     ->validationMessages(['unique' => 'A user with this email address already exists']),
-                Select::make('roles')
+                // Several from five or fewer: a checkbox list (Filament Storybook: forms-choice).
+                CheckboxList::make('roles')
                     ->label('Roles (optional)')
-                    ->options(fn (): array => Role::query()->orderBy('name')->pluck('name', 'name')->all())
-                    ->multiple()
-                    ->maxWidth('md'),
+                    ->options(fn (): array => Role::query()->orderBy('name')->pluck('name', 'name')->map(Str::headline(...))->all()),
             ])
             ->action(function (array $data, Action $action): void {
                 $user = User::forceCreate(['name' => $data['name'], 'email' => $data['email'], 'password' => null, 'invited_at' => now()]);
