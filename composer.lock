@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7c8d87047c486b397ba677a152ebef47",
+    "content-hash": "f39152239282d9dbdc17ccfd550f20fd",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -2330,16 +2330,16 @@
         },
         {
             "name": "josephdlmd/filament-storybook",
-            "version": "v0.78.2",
+            "version": "v0.79.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/josephdlmd/filament-storybook.git",
-                "reference": "64a15b9291181c140aaa31f95012d70dc5de191b"
+                "reference": "219ab65990ea33b6746d626a630eba4db35173e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/josephdlmd/filament-storybook/zipball/64a15b9291181c140aaa31f95012d70dc5de191b",
-                "reference": "64a15b9291181c140aaa31f95012d70dc5de191b",
+                "url": "https://api.github.com/repos/josephdlmd/filament-storybook/zipball/219ab65990ea33b6746d626a630eba4db35173e8",
+                "reference": "219ab65990ea33b6746d626a630eba4db35173e8",
                 "shasum": ""
             },
             "require": {
@@ -2356,10 +2356,12 @@
                 "orchestra/testbench": "^11.0",
                 "pestphp/pest": "^5.0",
                 "pestphp/pest-plugin-laravel": "^5.0",
+                "spatie/laravel-activitylog": "^5.0",
                 "spatie/laravel-pdf": "^2.14"
             },
             "suggest": {
                 "laravel/boost": "Gives AI agents the patterns, rules and checks as the storybook-list, storybook-show, storybook-instructions, storybook-test and storybook-audit MCP tools.",
+                "spatie/laravel-activitylog": "Keeps the activity log the records-history pattern lists on a record's View page.",
                 "spatie/laravel-pdf": "Makes the PDFs of the actions-download-pdf pattern, with spatie/browsershot and puppeteer for tagged PDFs."
             },
             "type": "library",
@@ -2390,10 +2392,10 @@
             ],
             "description": "Storybook for native Filament components: house patterns as PHP stories, a live catalogue page, and Boost MCP tools so AI agents reuse them instead of guessing.",
             "support": {
-                "source": "https://github.com/josephdlmd/filament-storybook/tree/v0.78.2",
+                "source": "https://github.com/josephdlmd/filament-storybook/tree/v0.79.0",
                 "issues": "https://github.com/josephdlmd/filament-storybook/issues"
             },
-            "time": "2026-10-18T07:17:04+00:00"
+            "time": "2026-10-18T13:24:57+00:00"
         },
         {
             "name": "kirschbaum-development/eloquent-power-joins",
