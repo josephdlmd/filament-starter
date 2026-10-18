@@ -36,6 +36,8 @@ class ManageGeneralSettings extends SettingsPage
     public function form(Schema $schema): Schema
     {
         return $schema
+            // SettingsPage sets two columns after the Storybook house default (package forms-settings-page).
+            ->columns(1)
             ->components([
                 TextInput::make('site_name')
                     ->helperText('Shown as the panel\'s brand name')
