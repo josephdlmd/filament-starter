@@ -1,0 +1,22 @@
+{
+    "extraKnownMarketplaces": {
+        "tall-flow": {
+            "source": {
+                "source": "github",
+                "repo": "josephdlmd/tall-flow"
+            },
+            "autoUpdate": true
+        },
+        "mattpocock": {
+            "source": {
+                "source": "github",
+                "repo": "mattpocock/skills"
+            },
+            "autoUpdate": true
+        }
+    },
+    "enabledPlugins": {
+        "tall-flow@tall-flow": true,
+        "mattpocock-skills@mattpocock": true
+    }
+}
