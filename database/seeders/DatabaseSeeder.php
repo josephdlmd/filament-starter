@@ -24,5 +24,8 @@ class DatabaseSeeder extends Seeder
                 'email' => 'test@example.com',
             ])
             ->assignRole(Role::Admin->value);
+
+        // One entry, so the activity log's View page has a record to open.
+        activity()->log('Seeded the first user');
     }
 }

@@ -10,8 +10,6 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\NoirTheme\NoirThemeColor;
-use Filament\NoirTheme\NoirThemePlugin;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -44,13 +42,11 @@ class AdminPanelProvider extends PanelProvider
                 AppAuthentication::make()->recoverable(),
             ])
             ->brandName(fn (): string => $this->brandName())
-            ->colors(NoirThemeColor::Colors)
             // Imports, exports and other background work report back here (Filament Storybook: tables-import-and-export).
             ->databaseNotifications()
             ->plugins([
-                NoirThemePlugin::make(),
                 CompactThemePlugin::make(),
-                StorybookPlugin::make()->compact(),
+                StorybookPlugin::make(),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')

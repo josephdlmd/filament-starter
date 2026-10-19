@@ -34,7 +34,7 @@ jobs:
           path: ~/.cache/composer
           key: composer-${{ hashFiles('composer.lock') }}
 
-      # Filament's paid packages (Blueprint, Noir, Compact) need the license.
+      # Filament's paid packages (Blueprint, Compact) need the license.
       # Set once per repo:  gh secret set FILAMENT_USERNAME  /  gh secret set FILAMENT_LICENSE_KEY
       - name: Install Composer dependencies
         env:
@@ -58,6 +58,10 @@ jobs:
 
       - name: Larastan
         run: composer analyse -- --no-progress --error-format=github
+
+      # StoriesTest runs storybook-test and storybook-audit, whose accessibility checks need a headless Chromium.
+      - name: Install Chromium
+        run: npx playwright-core install --with-deps chromium
 
       - name: Tests
         run: php artisan test
