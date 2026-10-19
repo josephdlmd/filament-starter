@@ -7,7 +7,7 @@ The starting point for every internal Laravel + Filament app.
 | Area | What you get |
 |---|---|
 | Framework | Laravel 13, PHP 8.5, SQLite by default, Pest 5 |
-| Admin panel | Filament 5 at `/admin`, **Noir + Compact** themes, profile page, optional app-based **2FA** with recovery codes |
+| Admin panel | Filament 5 at `/admin`, the locked Storybook look (Filament's **Compact** theme), profile page, optional app-based **2FA** with recovery codes |
 | Access control | `spatie/laravel-permission` with `Admin` / `Staff` / `Viewer` roles (`App\Enums\Role`) and permissions (`App\Enums\Permission`). Policies check **permissions**, never roles. Users without a role cannot enter the panel. |
 | Audit trail | `spatie/laravel-activitylog` on users, role changes and settings, with a read-only **Activity log** in the panel |
 | Spatie plugins | Media Library (user avatars), Tags (user tags), Settings (`GeneralSettings`, whose site name is the panel brand) |
@@ -20,7 +20,7 @@ The Users resource and the Settings page are working examples of each plugin. Ke
 ## Requirements
 
 - PHP 8.5, Composer, Node 26, the `gh` CLI (logged in)
-- A Filament license in your global Composer auth (`composer config --global home` → `auth.json`, host `packages.filamentphp.com`). Blueprint, Noir and Compact are paid packages.
+- A Filament license in your global Composer auth (`composer config --global home` → `auth.json`, host `packages.filamentphp.com`). Blueprint and Compact are paid packages.
 
 ## Create a new app
 
@@ -43,7 +43,6 @@ The script (`bin/new-filament-app`, symlinked into `~/.local/bin`):
 - [ ] Log in as `test@example.com` / `password`, then change the site name under **System → Settings**.
 - [ ] Review `App\Enums\Role` and `App\Enums\Permission`. Add your app's permissions and re-run `php artisan db:seed --class=RolesAndPermissionsSeeder`.
 - [ ] Decide whether to keep the demo avatar and tags on Users.
-- [ ] Pick panel colors in `AdminPanelProvider` if Noir's monochrome palette is not right for the app.
 - [ ] Plan the first feature: *"Using the planning-filament skill, create a Blueprint for … and write it to `blueprints/<name>.md`."*
 
 ## Everyday commands
