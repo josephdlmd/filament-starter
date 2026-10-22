@@ -41,6 +41,8 @@ title="$(sed -E 's/-+/ /g; s/\b(.)/\u\1/g' <<<"$name")"
 
 if [[ "$mode" == "github" ]]; then
     command -v gh >/dev/null || fail "gh CLI is not installed"
+    AUTH="$composer_auth" php -r 'exit(empty(json_decode(file_get_contents(getenv("AUTH")), true)["github-oauth"]["github.com"]) ? 1 : 0);' \
+        || fail "no github-oauth.github.com token in $composer_auth (CI needs it for the private dlhouse/guidelines package; see README, CI secrets)"
     owner="$(gh api user --jq .login)"
     repo="$owner/$name"
 
@@ -101,6 +103,8 @@ if [[ "$mode" == "github" ]]; then
         | gh secret set FILAMENT_USERNAME --repo "$repo"
     AUTH="$composer_auth" php -r 'echo json_decode(file_get_contents(getenv("AUTH")), true)["http-basic"]["packages.filamentphp.com"]["password"];' \
         | gh secret set FILAMENT_LICENSE_KEY --repo "$repo"
+    AUTH="$composer_auth" php -r 'echo json_decode(file_get_contents(getenv("AUTH")), true)["github-oauth"]["github.com"];' \
+        | gh secret set DLHOUSE_GUIDELINES_TOKEN --repo "$repo"
 fi
 
 step "Committing"

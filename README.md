@@ -35,7 +35,7 @@ The script (`bin/new-filament-app`, symlinked into `~/.local/bin`):
 2. Renames the Composer package and `APP_NAME`.
 3. Runs `composer run setup`: install, `.env`, key, SQLite, migrate and seed, build assets.
 4. Refreshes Boost guidelines and skills.
-5. Sets the `FILAMENT_USERNAME` / `FILAMENT_LICENSE_KEY` CI secrets from your Composer auth.
+5. Sets the `FILAMENT_USERNAME` / `FILAMENT_LICENSE_KEY` / `DLHOUSE_GUIDELINES_TOKEN` CI secrets from your Composer auth.
 6. Commits and pushes.
 
 ### After creating an app
@@ -70,4 +70,7 @@ Commit, push, and the next `new-filament-app` picks it up.
 ```bash
 php -r 'echo json_decode(file_get_contents(getenv("HOME")."/.config/composer/auth.json"), true)["http-basic"]["packages.filamentphp.com"]["username"];' | gh secret set FILAMENT_USERNAME
 php -r 'echo json_decode(file_get_contents(getenv("HOME")."/.config/composer/auth.json"), true)["http-basic"]["packages.filamentphp.com"]["password"];' | gh secret set FILAMENT_LICENSE_KEY
+php -r 'echo json_decode(file_get_contents(getenv("HOME")."/.config/composer/auth.json"), true)["github-oauth"]["github.com"];' | gh secret set DLHOUSE_GUIDELINES_TOKEN
 ```
+
+`DLHOUSE_GUIDELINES_TOKEN` is a fine-grained GitHub token with read-only Contents on `josephdlmd/dlhouse-guidelines` (the private DL House rules package), stored once with `composer config --global github-oauth.github.com <token>`.
