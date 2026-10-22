@@ -167,4 +167,77 @@ This app's approved UI patterns are PHP stories: classes extending `Josephdlmd\F
 - **Changing a shared standard** (a shared pattern or a rule in `docs/rules.md`): change the josephdlmd/filament-storybook repo and release it, never `vendor/`. The owner can add standards; UI rules need a current source, business facts come from the owner.
 - **Self-check:** after building or changing a resource screen, run `storybook-audit` with that resource (and its `panel`, if it is not the main one); after adding or changing a story, run `storybook-test`. Every finding fails: fix each one, and run it again until none remain. Never add an entry to `config/storybook-exceptions.php` yourself; only the owner settles an exception.
 
+=== dlhouse/guidelines/core rules ===
+
+# DLHouse house rules (dlhouse/guidelines 0.2.2, built from Agent Guidelines 0.2)
+
+You are building a DLHouse app: a De Leon business app for goods distribution and trading in the Philippines, on the TALL stack with Filament v5 (Livewire 4). Filament is the plumbing and wiring; DLHouse replaces its defaults with ours: our screen patterns, our tokens, our business rules, our controls. These rules are always in force. Pull the matching DLHouse skill before each kind of job (table at the end).
+
+## Scope: every DL Group app, split by area
+
+These rules guide every DL Group app built from the filament-starter, not only apps named DL House (owner's decision, October 22, 2026).
+
+- Business rules: DLHouse governs. Money, statuses, numbering, posting, tax, controls, roles, settings, glossary terms, tests and team process follow this file, its source documents and the dlhouse-money, dlhouse-controls, dlhouse-testing and dlhouse-team skills.
+- Screens and look: Filament Storybook (`josephdlmd/filament-storybook`) and the starter's themes govern. Where F8, F9, F10 or F11, the Screen Pattern Guide, the Style Guide and Tokens, or the dlhouse-screens and dlhouse-finishes skills disagree with Storybook or the starter's themes, Storybook and the starter win; use the DLHouse screen documents only where Storybook is silent. The starter's themes and Storybook are not third-party UI kits under F11.
+- F3 to F6 are business rules and hold on every screen, print and export, whatever Storybook pattern renders them.
+
+## Precedence
+
+Regulation first, then the DLHouse Executive Summary (Revision 5), then the Layer 1 documents (Glossary 0.7, Document Lifecycles 0.4, Control Register 0.5, Chart of Accounts 0.4, Settings Register 0.4, Company Policies 0.4, Master Files 0.1, Worked Examples 0.3, Opening Balances Plan 0.3, BIR Readiness Map 0.1), then the Screen Pattern Guide 0.2 and Style Guide and Tokens 0.5 (subject to the scope split above), then these guidelines. The Build Plan 0.2 sets the waves, modules and dates. A guideline never restates a rule differently; it points to the source document and the control ID. If this file and a source document disagree, the document wins: say so and stop.
+
+The source documents ship as reference files inside the DLHouse skills. Read the one a job touches before writing code.
+
+## The eleven firm rules
+
+The reviewer agent checks every one of these before any merge. They are not preferences.
+
+- F1. Never delete a posted or numbered document. Void it or reverse it whole, then re-record. (GL-02, GL-06, H3)
+- F2. Never edit production data directly. Every change goes through the app and its audit log. Boost's database tools are for development data only. (Executive Summary, Layer 4; ITC-03)
+- F3. "Invoice" alone means only the BIR invoice. Our internal document is always "Invoice Record." (Glossary 0.7)
+- F4. Invoice Records never go to customers: no print, email or export addressed to a customer. (SAL-10)
+- F5. Every other external document carries the input-tax phrase, conspicuous on page 1. (SAL-10; the phrase is THIS DOCUMENT IS NOT VALID FOR CLAIM OF INPUT TAX)
+- F6. Every app report and export is labeled "Internal management report." (CLS-09)
+- F7. Screen text comes only from language files, using glossary terms. (Definition of done 3)
+- F8. Every screen uses exactly one of the six patterns and says which. (Screen Pattern Guide 0.2, G2)
+- F9. Colors only through tokens. No hex values or raw color utilities in screens. (Style Guide 0.5)
+- F10. Follow the custom screen ladder; stop at the first rung that works. Rung 5 needs the design owner's approval, logged. (Executive Summary; Screen Pattern Guide 0.2)
+- F11. Never install a third-party UI kit, or load its agent guidelines, into a DLHouse app. (Executive Summary, Layers 3 and 4)
+
+## Wave 0 contracts every agent builds against
+
+- Money is whole centavos as integers behind the one money type in `dlhouse/rules`; never floating point. (G1)
+- Five document statuses only: Draft, Submitted, Approved, Posted, Voided. Rejected and Recalled are logged events; Held, Released, Matched and the like are progress states shown beside the status, never instead of it. Only the transitions in Document Lifecycles 0.4 exist.
+- Document numbers follow `CO-TYPE-YYYY-000001` per company, type and fiscal year, issued when a document leaves Draft, never reused, never consumed by a failed save. (S35, GL-06)
+- Every record belongs to exactly one company; nothing reads or writes across companies except the linked intercompany pairs in Lifecycles 0.4. (GEN-10)
+- Every threshold, rate and number of days is a setting from the Settings Register (S01 to S47), never a constant: the ₱50,000 approval and release lines, the ₱20,000 capitalization threshold, 12% VAT, the 90-day check age, the 60-day advance flag, the 7-day sweep. Lines compare the document total including VAT. (H1, TAX-05)
+- `dlhouse/rules` is plain Laravel and never imports Filament, Livewire or Boost classes. Screens call the rules; they never compute VAT, withholding, totals or postings. Business rules are tested with Pest, from the worked examples, before the feature. (G3)
+- Each screen declares its pattern once, in the searchable form the lead agent fixed in Wave 0. (G2)
+
+## Before touching any Filament or Livewire API
+
+Check it with Boost's Search Docs tool for Filament 5.x and Livewire 4.x first. Never rely on memory of older versions; v5 keeps v4's schemas, tables and actions and adds Livewire 4.
+
+## Stop and ask the driver (Joseph de Leon) before going on when
+
+- a tax, BIR, customs, FDA or privacy question is not answered in the Layer 1 documents; never guess a rate or a rule;
+- a change would touch a Wave 0 contract: the data model, status engine, numbering, posting-rule interface or screen conventions;
+- a posting rule would change (GL-08: the accountant's approval and a Class B release);
+- two source documents disagree; name both and the conflict;
+- the only way forward is rung 5 of the ladder.
+
+Anything marked ⚠️ in a source document is awaiting written confirmation: build it as a setting that can change, and say so in the branch.
+
+## Which skill to open
+
+| Job | Skill |
+| --- | --- |
+| Posting rules, amounts, tax, withholding, statuses, numbering, chart of accounts, master data, opening balances, BIR readiness | dlhouse-money |
+| Building or changing any Filament screen, page, table, form or action | Storybook first; dlhouse-screens only where Storybook is silent |
+| Theme, colors, type, spacing, status display, language files, print, accessibility | Storybook and the starter's themes first; dlhouse-finishes only where they are silent |
+| Anything touching approval, permissions, roles, periods, evidence, settings, reports, security | dlhouse-controls |
+| Writing or running tests | dlhouse-testing |
+| Starting, finishing or reviewing a branch; agent roles; waves; definition of done; friction log | dlhouse-team |
+
+Per-app conventions live in `.ai/rules` (index at `.ai/rules/index.md`); consult it before editing a matching file, and record a repeated mistake with Boost's `record-rule` tool rather than hand-writing a rule file.
+
 </laravel-boost-guidelines>

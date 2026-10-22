@@ -36,10 +36,11 @@ jobs:
 
       # Filament's paid packages (Blueprint, Compact) need the license.
       # Set once per repo:  gh secret set FILAMENT_USERNAME  /  gh secret set FILAMENT_LICENSE_KEY
+      # The private dlhouse/guidelines package needs a read-only GitHub token: gh secret set DLHOUSE_GUIDELINES_TOKEN
       - name: Install Composer dependencies
         env:
           COMPOSER_AUTH: >-
-            {"http-basic":{"packages.filamentphp.com":{"username":"${{ secrets.FILAMENT_USERNAME }}","password":"${{ secrets.FILAMENT_LICENSE_KEY }}"}}}
+            {"http-basic":{"packages.filamentphp.com":{"username":"${{ secrets.FILAMENT_USERNAME }}","password":"${{ secrets.FILAMENT_LICENSE_KEY }}"}},"github-oauth":{"github.com":"${{ secrets.DLHOUSE_GUIDELINES_TOKEN }}"}}
         run: composer install --no-interaction --prefer-dist --no-progress
 
       # The panel theme imports CSS from vendor/, so this must run after composer install.
