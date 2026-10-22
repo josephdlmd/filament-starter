@@ -25,6 +25,7 @@
         "spatie/laravel-permission": "^8.0"
     },
     "require-dev": {
+        "dlhouse/guidelines": "^0.2.2",
         "fakerphp/faker": "^1.23",
         "filament/blueprint": "^2.4",
         "larastan/larastan": "^3.0",
@@ -104,7 +105,10 @@
     },
     "config": {
         "optimize-autoloader": true,
-        "preferred-install": "dist",
+        "preferred-install": {
+            "dlhouse/guidelines": "source",
+            "*": "dist"
+        },
         "sort-packages": true,
         "allow-plugins": {
             "pestphp/pest-plugin": true,
@@ -114,6 +118,12 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "repositories": [
+        {
+            "name": "dlhouse-guidelines",
+            "type": "vcs",
+            "url": "https://github.com/josephdlmd/dlhouse-guidelines",
+            "no-api": true
+        },
         {
             "name": "filament-storybook",
             "type": "vcs",

@@ -9,7 +9,8 @@
     "packages": [
         "filament/filament",
         "filament/blueprint",
-        "josephdlmd/filament-storybook"
+        "josephdlmd/filament-storybook",
+        "dlhouse/guidelines"
     ],
     "sail": false,
     "skills": [
@@ -18,6 +19,12 @@
         "testing-best-practices",
         "tailwindcss-development",
         "filament-development",
+        "dlhouse-controls",
+        "dlhouse-finishes",
+        "dlhouse-money",
+        "dlhouse-screens",
+        "dlhouse-team",
+        "dlhouse-testing",
         "filament-security-audit",
         "planning-filament",
         "reviewing-filament-plans"
